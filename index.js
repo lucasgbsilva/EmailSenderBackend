@@ -146,6 +146,51 @@ for (let i = 0; i < string_length; i++) {
 });
 
 
+app.post('/send-email-passwordmod', async (req, res) => {
+    const { nome, email, mensagem } = req.body;
+    const transporter = nodemailer.createTransport({
+        host: process.env.EMAIL_HOST,
+        port: process.env.EMAIL_PORT,
+        auth: {
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASS,
+        }
+    });
+    const mailOptions = {
+        from: "lucas.outro0106@gmail.com",
+        to: email,
+        subject: 'Sua senha foi modificada com sucesso.',
+        text: `Olá ${nome},
+
+        Informamos que sua senha foi alterada com sucesso.
+        
+        Se você não solicitou essa mudança, entre em contato conosco imediatamente.
+        
+        Atenciosamente,
+        
+        Alberto
+        Senac`,
+        html: `Olá <b>${nome}</b>,<br>
+
+        Informamos que sua senha foi alterada com <b>sucesso</b>.<br>
+        
+        Se você não solicitou essa mudança, entre em contato conosco imediatamente.<br>
+        
+        Atenciosamente,<br>
+        
+        Alberto
+        Senac`
+    };
+
+    try {
+        await transporter.sendMail(mailOptions);
+        res.json({ success: true });
+    } catch (error) {
+        console.error('Erro ao enviar email:', error);
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
 const port = 5000;
 app.listen(port, () => {
     console.log(`O servidor está rodando na porta http://localhost:${port}`);
