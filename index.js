@@ -90,11 +90,11 @@ app.post('/send-email-welcome', async (req, res) => {
 
         Seja muito bem-vindo(a) ao Senac!
         
-        Estamos muito felizes em tê-lo(a) conosco e esperamos que essa seja uma jornada de muito sucesso e aprendizado. Se precisar de qualquer coisa, não hesite em entrar em contato. `,
+        ${mensagem} `,
         html: `Olá <b>${nome}</b>,\n\n
         Seja muito bem-vindo(a) ao Senac!\n\n
 
-        Estamos muito felizes em tê-lo(a) conosco e esperamos que essa seja uma jornada de muito sucesso e aprendizado. Se precisar de qualquer coisa, não hesite em entrar em contato.`
+        ${mensagem}`
     };
 
     try {
@@ -128,7 +128,7 @@ for (let i = 0; i < string_length; i++) {
     const mailOptions = {
         from: "lucas.outro0106@gmail.com",
         to: req.body.email,
-        subject: "Confirme seu endereço de email",
+        subject: "Senha de recuperação do Email",
         text: `Esta é uma senha temporária, logo após login altere a senha:` + randomstring,
         html: `Esta é uma senha temporária, logo após login altere a senha:\n\n<b>${randomstring}</b>`
     };
@@ -172,11 +172,7 @@ app.post('/send-email-passwordmod', async (req, res) => {
         Senac`,
         html: `Olá <b>${nome}</b>,<br>
 
-        Informamos que sua senha foi alterada com <b>sucesso</b>.<br>
-        
-        Se você não solicitou essa mudança, entre em contato conosco imediatamente.<br>
-        
-        Atenciosamente,<br>
+        ${mensagem}<br>
         
         Alberto
         Senac`
